@@ -21,8 +21,6 @@ jobs:
           fi
 
           site="$(
-            lines=''
-
             curl -sS -L -f https://download.openwall.net/pub/projects/passwdqc/  |
               grep -E '\.tar\.gz">passwdqc-' |
               while read -r line; do
@@ -50,12 +48,12 @@ jobs:
 
           echo "diff=${diff//$'\n'/'\n'}" >> $GITHUB_OUTPUT
 
-      - if: steps.outputs.this.diff != ''
+      - if: steps.this.outputs.diff != ''
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - if: steps.outputs.this.diff != ''
+      - if: steps.this.outputs.diff != ''
         env:
           DIFF: steps.outputs.this.diff
         run: |
@@ -81,7 +79,7 @@ jobs:
           git push origin gh-pages
 
       - id: deployment
-        if: steps.outputs.this.diff != ''
+        if: steps.this.outputs.diff != ''
         uses: actions/upload-pages-artifact@v3
         with:
           path: releases.json
