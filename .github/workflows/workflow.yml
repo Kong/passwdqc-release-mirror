@@ -88,9 +88,9 @@ jobs:
           done
 
           mv -v _releases.json releases.json
-          # git add releases.json
-          # git commit -m "chore(add): ${v}"
-          # git push origin gh-pages
+          git add releases.json
+          git commit -m "chore(add): ${v}"
+          git push
 
           cp -v releases.json _site/
 
