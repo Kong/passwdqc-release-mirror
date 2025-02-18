@@ -64,6 +64,8 @@ jobs:
         run: |
           [ -n "${VERBOSE:-}" ] && set -x
 
+          mkdir -pv _site
+
           for v in $(echo -e "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
             wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
 
@@ -85,8 +87,8 @@ jobs:
           # git commit -m "chore(add): ${v}"
           # git push origin gh-pages
 
+          cp -v releases.json _site/
+
       - id: deployment
         if: steps.this.outputs.diff != ''
         uses: actions/upload-pages-artifact@v3
-        with:
-          path: releases.json
