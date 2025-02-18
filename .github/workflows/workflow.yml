@@ -48,7 +48,7 @@ jobs:
               <(echo "$remote") || true
           )"
 
-          echo "diff=${diff}" >> $GITHUB_OUTPUT
+          echo "diff=${diff//$'\n'/'\n'}" >> $GITHUB_OUTPUT
 
       - if: steps.outputs.this.diff != ''
         run: |
@@ -59,28 +59,26 @@ jobs:
         env:
           DIFF: steps.outputs.this.diff
         run: |
-          if [ -n "$DIFF" ]; then
-            for v in $(echo "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
-              wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
+          for v in $(echo "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
+            wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
 
-              t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
+            t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
 
-              d="$(
-                sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
-              )"
+            d="$(
+              sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
+            )"
 
-              jq --argjson _ "{
-                \"version\": \"${v}\",
-                \"digest\": \"${d}\",
-                \"releaseTimestamp\": \"${t}\"
-              }" '.releases += [$_]' releases.json > _releases.json
-            done
+            jq --argjson _ "{
+              \"version\": \"${v}\",
+              \"digest\": \"${d}\",
+              \"releaseTimestamp\": \"${t}\"
+            }" '.releases += [$_]' releases.json > _releases.json
+          done
 
-            mv -v _releases.json releases.json
-            git add releases.json
-            git commit -m "chore(add): ${v}"
-            git push origin gh-pages
-          fi
+          mv -v _releases.json releases.json
+          git add releases.json
+          git commit -m "chore(add): ${v}"
+          git push origin gh-pages
 
       - id: deployment
         if: steps.outputs.this.diff != ''
