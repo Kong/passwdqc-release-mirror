@@ -45,10 +45,10 @@ jobs:
           diff="$(
             diff -u \
               <(echo "$local") \
-              <(echo "$remote")
+              <(echo "$remote") || true
           )"
 
-          if [ ${?} ]; then
+          if [ -n "$diff" ]; then
             for v in $(echo "$diff" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
               t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
               wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
