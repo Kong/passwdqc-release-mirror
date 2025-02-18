@@ -2,6 +2,9 @@ name: Mirror
 
 on:
   workflow_dispatch: {}
+  schedule:
+    # Every Monday at 1PM UTC (9AM EST)
+    - cron: "0 13 * * 1"
 
 jobs:
   job:
@@ -35,7 +38,7 @@ jobs:
                 printf '%s,%s\n' "$v" "$(${_G}date -d "$t" +'%Y-%m-%dT%H:%MZ')"
               done
           )"
-          
+
           echo "site=${site//$'\n'/'\n'}" >> $GITHUB_OUTPUT
 
           local="$(
