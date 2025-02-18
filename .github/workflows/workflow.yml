@@ -6,6 +6,8 @@ on:
 jobs:
   job:
     runs-on: ubuntu-latest
+    outputs:
+      page_url: steps.deployment.outputs.page_url
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
 
@@ -92,3 +94,20 @@ jobs:
       - id: deployment
         if: steps.this.outputs.diff != ''
         uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: job
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ needs.job.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
