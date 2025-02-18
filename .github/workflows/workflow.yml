@@ -35,6 +35,8 @@ jobs:
                 printf '%s,%s\n' "$v" "$(${_G}date -d "$t" +'%Y-%m-%dT%H:%MZ')"
               done
           )"
+          
+          echo "site=${site//$'\n'/'\n'}" >> $GITHUB_OUTPUT
 
           local="$(
             jq -r '.releases[]|.version' releases.json
@@ -62,6 +64,7 @@ jobs:
       - if: steps.this.outputs.diff != ''
         env:
           DIFF: ${{ steps.this.outputs.diff }}
+          SITE: ${{ steps.this.outputs.site }}
           VERBOSE: ${{ runner.debug }}
         run: |
           [ -n "${VERBOSE:-}" ] && set -x
@@ -71,7 +74,7 @@ jobs:
           for v in $(echo -e "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
             wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
 
-            t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
+            t="$(echo "$SITE" | grep "$v" | cut -d',' -f2)"
 
             d="$(
               sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
