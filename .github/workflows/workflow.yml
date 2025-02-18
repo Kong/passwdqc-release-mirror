@@ -59,7 +59,7 @@ jobs:
 
       - if: steps.this.outputs.diff != ''
         env:
-          DIFF: ${{ steps.outputs.this.diff }}
+          DIFF: ${{ steps.this.outputs.diff }}
           VERBOSE: ${{ runner.debug }}
         run: |
           [ -n "${VERBOSE:-}" ] && set -x
