@@ -1,0 +1,100 @@
+{
+  "releases": [
+    {
+      "version": "1.1.0",
+      "releaseTimestamp": "2009-10-11T01:39Z",
+      "digest": "adf621cbd98eddde265a9ee6c6d15e85441dd3848d5e6f73b39cc72f3d3cd338"
+    },
+    {
+      "version": "1.1.1",
+      "releaseTimestamp": "2009-10-17T00:02Z",
+      "digest": "c815b007e23fcaba3f955d619c3bc758307a767ea5bd9829bf3b08c5ef9e06a4"
+    },
+    {
+      "version": "1.1.2",
+      "releaseTimestamp": "2009-10-17T04:54Z",
+      "digest": "eaaddf99ea0de86663e402a6857c3493de17197edd7d7ae8d9b29aa28fb5cf23"
+    },
+    {
+      "version": "1.1.3",
+      "releaseTimestamp": "2009-10-23T04:42Z",
+      "digest": "8cf4773c1a71f3285bc4d251831947359ff041eb8a3b442ad52e6700d3f8cfb3"
+    },
+    {
+      "version": "1.1.4",
+      "releaseTimestamp": "2009-11-17T22:13Z",
+      "digest": "25e84fa57e6f59e0a21616e8f0b6eee39533bbdf0c0e97497eef33bc815a167f"
+    },
+    {
+      "version": "1.2.0",
+      "releaseTimestamp": "2010-03-16T09:45Z",
+      "digest": "b45cd4e0c2fdf0df3105263023a7f3f754f8ebd4dfc4bdfeaf4de9451d6849d6"
+    },
+    {
+      "version": "1.2.1",
+      "releaseTimestamp": "2010-03-27T20:45Z",
+      "digest": "68a1caa2136a3fc4dafa0fc3501858c0b7e6ebb783b0cb5f2acd54a47a3b6a9a"
+    },
+    {
+      "version": "1.2.2",
+      "releaseTimestamp": "2010-06-23T01:11Z",
+      "digest": "4a05a8c6c29f2648f67fc096ac6b8972f62ef9440c13e22066c5304a7ee2cb80"
+    },
+    {
+      "version": "1.2.4",
+      "releaseTimestamp": "2013-04-23T16:25Z",
+      "digest": "63d4396ae2afac6c4b07c48b7c8309a3feb8b9b3a471a981e7d5c65a74f10d1e"
+    },
+    {
+      "version": "1.3.0",
+      "releaseTimestamp": "2013-04-24T04:04Z",
+      "digest": "23290ac21a055d9039b510bbc0d830a6dbf4295688d4317e0350ed4b6e5e7f50"
+    },
+    {
+      "version": "1.3.1",
+      "releaseTimestamp": "2016-07-21T14:48Z",
+      "digest": "d1fedeaf759e8a0f32d28b5811ef11b5a5365154849190f4b7fab670a70ffb14"
+    },
+    {
+      "version": "1.3.2",
+      "releaseTimestamp": "2019-12-10T00:35Z",
+      "digest": "4971d3aeb09bd4b40610937189872073a83dc9985aa33fa6ac05abfe4ec4c851"
+    },
+    {
+      "version": "1.4.0",
+      "releaseTimestamp": "2019-12-25T18:09Z",
+      "digest": "72689c31c34d48349a7c2aab2cf6cf95b8d22818758aba329d5e0ead9f95fc97"
+    },
+    {
+      "version": "1.4.1",
+      "releaseTimestamp": "2021-02-08T00:33Z",
+      "digest": "42a9a42b2937539b599b4fd3608b8f05fe0f931867d07c035546c1120c4be5b5"
+    },
+    {
+      "version": "1.5.0",
+      "releaseTimestamp": "2021-02-08T00:37Z",
+      "digest": "29e5a3cf0643b15ad697ec497a960d0e52b4280d11a5af558a9fd18972a75c32"
+    },
+    {
+      "version": "1.9.0",
+      "releaseTimestamp": "2021-02-08T00:44Z",
+      "digest": "67ccc72029a9c883ddaec154065376096b390dc82eb78eb04b6bf84536c5cec2"
+    },
+    {
+      "version": "2.0.0",
+      "releaseTimestamp": "2021-02-16T20:30Z",
+      "digest": "a57ae2711275d81e301bcebe531fffc100f583051e1154c73f2d9cd9ab1e4c94"
+    },
+    {
+      "version": "2.0.1",
+      "releaseTimestamp": "2021-03-10T17:17Z",
+      "digest": "5637e2c72b2738128f378b350f69253cbd5ebeffa7b550820640d1ae2638a868"
+    },
+    {
+      "version": "2.0.2",
+      "releaseTimestamp": "2021-04-04T18:36Z",
+      "digest": "ff1f505764c020f6a4484b1e0cc4fdbf2e3f71b522926d90b4709104ca0604ab"
+    }
+  ],
+  "homepage": "https://www.openwall.com/passwdqc/"
+}

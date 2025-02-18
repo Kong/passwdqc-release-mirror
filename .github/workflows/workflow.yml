@@ -7,10 +7,10 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
-        with:
-          ref: gh-pages
-      - env:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744
+
+      - id: this
+        env:
           VERBOSE: ${{ runner.debug }}
         run: |
           [ -n "${VERBOSE:-}" ] && set -x
@@ -48,10 +48,23 @@ jobs:
               <(echo "$remote") || true
           )"
 
-          if [ -n "$diff" ]; then
-            for v in $(echo "$diff" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
-              t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
+          echo "diff=${diff}" >> $GITHUB_OUTPUT
+
+      - if: steps.outputs.this.diff != ''
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - if: steps.outputs.this.diff != ''
+        env:
+          DIFF: steps.outputs.this.diff
+        run: |
+          if [ -n "$DIFF" ]; then
+            for v in $(echo "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
               wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
+
+              t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
+
               d="$(
                 sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
               )"
@@ -70,6 +83,7 @@ jobs:
           fi
 
       - id: deployment
+        if: steps.outputs.this.diff != ''
         uses: actions/upload-pages-artifact@v3
         with:
           path: releases.json
