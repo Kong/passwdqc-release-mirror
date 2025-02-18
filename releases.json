@@ -94,6 +94,11 @@
       "version": "2.0.3",
       "digest": "53b0f4bc49369f06195e9e13abb6cff352d5acb79e861004ec95973896488cf4",
       "releaseTimestamp": "2023-06-25T20:20Z"
+    },
+    {
+      "version": "2.0.2",
+      "digest": "ff1f505764c020f6a4484b1e0cc4fdbf2e3f71b522926d90b4709104ca0604ab",
+      "releaseTimestamp": "2021-04-04T18:36Z"
     }
   ],
   "homepage": "https://www.openwall.com/passwdqc/"
