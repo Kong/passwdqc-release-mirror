@@ -1,0 +1,75 @@
+name: Mirror
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          ref: gh-pages
+      - env:
+          VERBOSE: ${{ runner.debug }}
+        run: |
+          [ -n "${VERBOSE:-}" ] && set -x
+
+          _G=''
+          if uname -a | grep -i darwin; then
+            _G='g'
+          fi
+
+          site="$(
+            lines=''
+
+            curl -sS -L -f https://download.openwall.net/pub/projects/passwdqc/  |
+              grep -E '\.tar\.gz">passwdqc-' |
+              while read -r line; do
+                v="$(
+                  echo "$line" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | head -n1
+                )"
+                t="$(
+                  echo "$line" | awk '{print $7 " " $8}'
+                )"
+                printf '%s,%s\n' "$v" "$(${_G}date -d "$t" +'%Y-%m-%dT%H:%MZ')"
+              done
+          )"
+
+          local="$(
+            jq -r '.releases[]|.version' releases.json
+          )"
+
+          remote="$(echo "$site" | cut -d',' -f1)"
+
+          diff="$(
+            diff -u \
+              <(echo "$local") \
+              <(echo "$remote")
+          )"
+
+          if [ ${?} ]; then
+            for v in $(echo "$diff" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
+              t="$(echo "$site" | grep "$v" | cut -d',' -f2)"
+              wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
+              d="$(
+                sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
+              )"
+
+              jq --argjson _ "{
+                \"version\": \"${v}\",
+                \"digest\": \"${d}\",
+                \"releaseTimestamp\": \"${t}\"
+              }" '.releases += [$_]' releases.json > _releases.json
+            done
+
+            mv -v _releases.json releases.json
+            git add releases.json
+            git commit -m "chore(add): ${v}"
+            git push origin gh-pages
+          fi
+
+      - id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: releases.json
