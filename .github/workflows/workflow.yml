@@ -52,6 +52,8 @@ jobs:
         env:
           VERBOSE: ${{ runner.debug }}
         run: |
+          [ -n "${VERBOSE:-}" ] && set -x
+
           git config user.name "GitHub Actions Bot"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -60,6 +62,8 @@ jobs:
           DIFF: steps.outputs.this.diff
           VERBOSE: ${{ runner.debug }}
         run: |
+          [ -n "${VERBOSE:-}" ] && set -x
+
           for v in $(echo -e "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
             wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
 
