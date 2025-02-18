@@ -77,7 +77,7 @@ jobs:
           for v in $(echo -e "$DIFF" | tail -n+3 | grep -E '^\+' | cut -d'+' -f2-); do
             wget -nv "https://download.openwall.net/pub/projects/passwdqc/passwdqc-${v}.tar.gz"
 
-            t="$(echo -e "$SITE" | grep "$v" | cut -d',' -f2)"
+            t="$(echo -e "$SITE" | grep -E "^${v}," | cut -d',' -f2)"
 
             d="$(
               sha256sum ./passwdqc-${v}.tar.gz | cut -d' ' -f1
