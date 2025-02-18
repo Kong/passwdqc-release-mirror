@@ -74,16 +74,16 @@ jobs:
             )"
 
             jq --argjson _ "{
-              \"version\": \"${v}\",
-              \"digest\": \"${d}\",
+              \"version\":          \"${v}\",
+              \"digest\":           \"${d}\",
               \"releaseTimestamp\": \"${t}\"
             }" '.releases += [$_]' releases.json > _releases.json
           done
 
           mv -v _releases.json releases.json
-          git add releases.json
-          git commit -m "chore(add): ${v}"
-          git push origin gh-pages
+          # git add releases.json
+          # git commit -m "chore(add): ${v}"
+          # git push origin gh-pages
 
       - id: deployment
         if: steps.this.outputs.diff != ''
